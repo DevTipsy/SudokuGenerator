@@ -20,8 +20,8 @@ struct MainView: View {
             VStack(spacing: 0) {
                 PreviewSection(viewModel: viewModel)
                 
-                VStack(spacing: 10) {  // Réduit de 16 à 10
-                    VStack(alignment: .leading, spacing: 6) {  // Réduit de 8 à 6
+                VStack(spacing: 10) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("QUANTITÉ À GÉNÉRER (MAXIMUM 20)")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -41,14 +41,14 @@ struct MainView: View {
                                 }
                             }
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 10)  // Réduit de padding()
+                            .padding(.vertical, 10)
                         }
                         .background(Color(UIColor.secondarySystemGroupedBackground))
                         .cornerRadius(10)
                         .padding(.horizontal)
                     }
                     
-                    VStack(alignment: .leading, spacing: 6) {  // Réduit de 8 à 6
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("NIVEAUX DE DIFFICULTÉ")
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -112,7 +112,7 @@ struct MainView: View {
                             if viewModel.isGenerating {
                                 ProgressView()
                                     .progressViewStyle(CircularProgressViewStyle())
-                                    .scaleEffect(0.7)  // Réduit de 0.8
+                                    .scaleEffect(0.7)
                                     .tint(.white)
                             } else {
                                 Label("Générer", systemImage: "wand.and.stars")

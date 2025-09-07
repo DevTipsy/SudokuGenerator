@@ -189,14 +189,10 @@ struct AboutSheet: View {
     
     private func rateApp() {
         // iOS 16+ : Utilise la nouvelle API RequestReview
-        if #available(iOS 16.0, *) {
-            requestReview()
-        } else {
-            // iOS 15 et moins : Ouvre directement l'App Store
-            if let url = URL(string: "https://apps.apple.com/app/id\(appStoreID)?action=write-review") {
-                UIApplication.shared.open(url)
-            }
-        }
+        requestReview()
+        // Note: requestReview() existe depuis iOS 16.0
+        // L'app ayant un minimum deployment target iOS 16+,
+        // pas besoin de fallback pour iOS 15
     }
     
     private func generateSupportEmailBody() -> String {
