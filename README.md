@@ -22,7 +22,7 @@ Cette application a été conçue pour être utilisée sur iPad avec un Apple Pe
 ## 📸 Aperçu
 
 <p align="center">
-  <img src="assets/Git/Main.png" width="200" alt="main" />
+  <img src="assets/Git/Export.imageset/Export.png" width="200" alt="main" />
   <img src="assets/Git/Export.png" width="200" alt="export" />
   <img src="assets/Git/Historic.png" width="200" alt="historic.png" />
   <img src="assets/Git/Info.png" width="200" alt="info" />
@@ -47,5 +47,6 @@ Cette application a été conçue pour être utilisée sur iPad avec un Apple Pe
 1. Clone ce repo :
    ```bash
    git clone https://github.com/DevTipsy/SudokuGenerator.git
+
 
 
