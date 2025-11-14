@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Untitled-iOS-Default-1024x1024@1x.png",
+      "filename" : "square.grid.3x3 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Untitled-iOS-Dark-1024x1024@1x.png",
+      "filename" : "square.grid.3x3 3.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "Untitled-iOS-ClearLight-1024x1024@1x.png",
+      "filename" : "square.grid.3x3 4.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

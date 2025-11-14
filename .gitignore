@@ -19,6 +19,7 @@ build/
 DerivedData/
 *.xcuserstate
 *.moved-aside
+*.xcodeproj
 
 # Swift Package Manager
 .build/
