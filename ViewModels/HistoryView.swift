@@ -46,7 +46,7 @@ struct HistoryView: View {
             }
             .sheet(isPresented: $showingShareSheet) {
                 if !pdfDataToShare.isEmpty {
-                    ShareSheet(items: pdfDataToShare)
+                    MultiFileShareSheet(items: pdfDataToShare)
                 }
             }
         }
@@ -160,9 +160,9 @@ struct HistoryRow: View {
     }
 }
 
-// MARK: - Share Sheet
+// MARK: - Multi-File Share Sheet
 
-struct ShareSheet: UIViewControllerRepresentable {
+struct MultiFileShareSheet: UIViewControllerRepresentable {
     let items: [(Data, String)]
     
     func makeUIViewController(context: Context) -> UIActivityViewController {

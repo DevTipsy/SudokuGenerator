@@ -18,10 +18,10 @@ enum Difficulty: String, CaseIterable, Identifiable {
     
     var cellsToRemove: Int {
         switch self {
-        case .beginner: return 40
-        case .intermediate: return 48
-        case .expert: return 54
-        case .hardcore: return 60
+        case .beginner: return 35       // Réduit de 40 à 35 pour plus de cohérence
+        case .intermediate: return 45   // Réduit de 48 à 45
+        case .expert: return 52         // Réduit de 54 à 52
+        case .hardcore: return 58       // Réduit de 60 à 58
         }
     }
     

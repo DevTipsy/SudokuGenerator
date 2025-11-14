@@ -55,7 +55,7 @@ extension GeneratedSudoku: Codable {
         try container.encode(puzzleData, forKey: .puzzle)
         
         try container.encode(solution, forKey: .solution)
-        try container.encode(difficulty, forKey: .difficulty)
+        try container.encode(difficulty.rawValue, forKey: .difficulty)
         try container.encode(number, forKey: .number)
     }
     
@@ -70,9 +70,17 @@ extension GeneratedSudoku: Codable {
         }
         
         let decodedSolution = try container.decode([[Int]].self, forKey: .solution)
-        let decodedDifficulty = try container.decode(Difficulty.self, forKey: .difficulty)
+        let difficultyRawValue = try container.decode(String.self, forKey: .difficulty)
+        guard let decodedDifficulty = Difficulty(rawValue: difficultyRawValue) else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .difficulty,
+                in: container,
+                debugDescription: "Cannot decode Difficulty from \(difficultyRawValue)"
+            )
+        }
         let decodedNumber = try container.decode(Int.self, forKey: .number)
         
+        // Utilisation du memberwise initializer pour les structs avec des propriétés let
         self.init(
             id: decodedId,
             puzzle: decodedPuzzle,
@@ -80,13 +88,5 @@ extension GeneratedSudoku: Codable {
             difficulty: decodedDifficulty,
             number: decodedNumber
         )
-    }
-    
-    init(id: UUID, puzzle: [[Int?]], solution: [[Int]], difficulty: Difficulty, number: Int) {
-        self.id = id
-        self.puzzle = puzzle
-        self.solution = solution
-        self.difficulty = difficulty
-        self.number = number
     }
 }

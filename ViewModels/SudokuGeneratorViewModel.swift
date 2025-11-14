@@ -11,6 +11,13 @@ import Foundation
 class SudokuGeneratorViewModel: ObservableObject {
     @Published var generatedSudokus: [GeneratedSudoku] = []
     @Published var isGenerating = false
+    @Published var history: [HistoryEntry] = []
+    
+    private let historyKey = "sudokuHistory"
+    
+    init() {
+        loadHistory()
+    }
     
     // MARK: - Génération avec Swift Concurrency moderne
     
@@ -38,6 +45,11 @@ class SudokuGeneratorViewModel: ObservableObject {
         // Mise à jour sur MainActor (déjà garanti car la classe est @MainActor)
         generatedSudokus = newSudokus
         isGenerating = false
+        
+        // Ajouter à l'historique
+        if !newSudokus.isEmpty {
+            addToHistory(sudokus: newSudokus)
+        }
     }
     
     // Alternative pour Swift 5.5+ (plus simple mais moins performante)
@@ -69,7 +81,7 @@ class SudokuGeneratorViewModel: ObservableObject {
         )
         
         let filename = PDFGenerator.generateFileName(
-            for: includeSolutions ? "Solutions" : "Puzzles"
+            for: includeSolutions ? "Solutions" : "Grilles"
         )
         
         return (data, filename)
@@ -85,6 +97,37 @@ class SudokuGeneratorViewModel: ObservableObject {
         // Efface et régénère
         generatedSudokus = []
         await generateSudokus(count: count, difficulties: difficulties)
+    }
+    
+    // MARK: - Gestion de l'historique
+    
+    private func addToHistory(sudokus: [GeneratedSudoku]) {
+        let entry = HistoryEntry(sudokus: sudokus)
+        history.insert(entry, at: 0)
+        saveHistory()
+    }
+    
+    private func saveHistory() {
+        guard let encoded = try? JSONEncoder().encode(history) else { return }
+        UserDefaults.standard.set(encoded, forKey: historyKey)
+    }
+    
+    private func loadHistory() {
+        guard let data = UserDefaults.standard.data(forKey: historyKey),
+              let decoded = try? JSONDecoder().decode([HistoryEntry].self, from: data) else {
+            return
+        }
+        history = decoded
+    }
+    
+    func deleteHistoryEntry(_ entry: HistoryEntry) {
+        history.removeAll { $0.id == entry.id }
+        saveHistory()
+    }
+    
+    func clearHistory() {
+        history = []
+        saveHistory()
     }
 }
 

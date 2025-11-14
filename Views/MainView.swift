@@ -13,6 +13,7 @@ struct MainView: View {
     @State private var selectedDifficulties = Set<Difficulty>([.beginner])
     @State private var showingExportSheet = false
     @State private var showingAbout = false
+    @State private var showingHistory = false
     @AppStorage("totalGenerated") private var totalGenerated = 0
     
     var body: some View {
@@ -141,10 +142,18 @@ struct MainView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAbout = true
-                    } label: {
-                        Image(systemName: "info.circle")
+                    HStack(spacing: 16) {
+                        Button {
+                            showingHistory = true
+                        } label: {
+                            Image(systemName: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+                        }
+                        
+                        Button {
+                            showingAbout = true
+                        } label: {
+                            Image(systemName: "info.circle")
+                        }
                     }
                 }
             }
@@ -153,6 +162,9 @@ struct MainView: View {
             }
             .sheet(isPresented: $showingAbout) {
                 AboutSheet()
+            }
+            .sheet(isPresented: $showingHistory) {
+                HistoryView(viewModel: viewModel)
             }
             .onChange(of: viewModel.generatedSudokus) { _, newValue in
                 if !newValue.isEmpty {

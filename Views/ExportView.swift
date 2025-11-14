@@ -64,7 +64,7 @@ private extension ExportView {
     var puzzleLabel: some View {
         Label {
             VStack(alignment: .leading) {
-                Text("PDF Puzzles")
+                Text("PDF Grilles")
                     .font(.headline)
                 Text("\(viewModel.generatedSudokus.count) sudokus")
                     .font(.caption)
@@ -79,7 +79,7 @@ private extension ExportView {
     
     var puzzleButton: some View {
         Button(action: exportPuzzles) {
-            Text("Télécharger les puzzles")
+            Text("Télécharger les grilles")
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.bordered)
@@ -91,7 +91,7 @@ private extension ExportView {
         } header: {
             Text("Solutions")
         } footer: {
-            Text("💡 Fichier séparé pour garder le suspense")
+            Text("💡 Fichier séparé pour éviter la triche")
                 .font(.caption)
         }
     }
