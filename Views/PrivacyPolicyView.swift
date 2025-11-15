@@ -33,7 +33,7 @@ struct PrivacyPolicyView: View {
                         icon: "wifi.slash",
                         iconColor: .blue,
                         title: "100% Hors ligne",
-                        description: "Sudoku Master fonctionne entièrement sur votre appareil. Aucune connexion internet n'est requise ou utilisée."
+                        description: "Générateur de Sudoku fonctionne entièrement sur votre appareil. Aucune connexion internet n'est requise ou utilisée."
                     )
                     
                     PrivacySection(

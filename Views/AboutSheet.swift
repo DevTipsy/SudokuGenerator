@@ -37,7 +37,7 @@ struct AboutSheet: View {
                                 )
                             )
                         
-                        Text("Sudoku Master")
+                        Text("Générateur de Sudoku")
                             .font(.title.bold())
                         
                         Text("Version 1.0")
@@ -55,7 +55,7 @@ struct AboutSheet: View {
                 .listRowBackground(Color.clear)
                 
                 // Fonctionnalités
-                Section("Pourquoi Sudoku Master ?") {
+                Section("Pourquoi Générateur de Sudoku ?") {
                     FeatureRow(
                         icon: "wifi.slash",
                         iconColor: .green,
@@ -165,7 +165,7 @@ struct AboutSheet: View {
             .sheet(isPresented: $showingMailComposer) {
                 MailComposerView(
                     recipient: "thibault_sanclemente@icloud.com",
-                    subject: "Support Sudoku Master",
+                    subject: "Support Générateur de Sudoku",
                     body: generateSupportEmailBody(),
                     result: $mailResult
                 )

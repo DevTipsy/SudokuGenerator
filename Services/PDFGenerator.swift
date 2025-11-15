@@ -82,7 +82,7 @@ class PDFGenerator {
             }
             
             if includeDate {
-                let footer = "Généré avec Sudoku Master - \(formattedDate())"
+                let footer = "Généré avec Générateur de Sudoku - \(formattedDate())"
                 let footerAttrs: [NSAttributedString.Key: Any] = [
                     .font: UIFont.systemFont(ofSize: 10),
                     .foregroundColor: UIColor.gray

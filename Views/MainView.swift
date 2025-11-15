@@ -138,7 +138,7 @@ struct MainView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
             }
-            .navigationTitle("Sudoku Master")
+            .navigationTitle("Générateur de Sudoku")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
