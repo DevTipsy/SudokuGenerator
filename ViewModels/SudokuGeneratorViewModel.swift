@@ -14,6 +14,17 @@ class SudokuGeneratorViewModel: ObservableObject {
     @Published var history: [HistoryEntry] = []
     
     private let historyKey = "sudokuHistory"
+    private let counterKey = "sudokuCounter"
+    
+    // Compteur global pour la numérotation des grilles
+    private var globalCounter: Int {
+        get {
+            UserDefaults.standard.integer(forKey: counterKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: counterKey)
+        }
+    }
     
     init() {
         loadHistory()
@@ -24,23 +35,31 @@ class SudokuGeneratorViewModel: ObservableObject {
     func generateSudokus(count: Int, difficulties: [Difficulty]) async {
         isGenerating = true
         
+        // Récupérer le compteur actuel et l'incrémenter
+        let startNumber = globalCounter + 1
+        
         // Option 1: Task concurrent avec actors (Recommandé pour Swift 6)
-        let newSudokus = await withTaskGroup(of: GeneratedSudoku.self) { group in
-            for i in 1...count {
+        let newSudokus = await withTaskGroup(of: (GeneratedSudoku, Int).self) { group in
+            for i in 0..<count {
+                let sudokuNumber = startNumber + i
                 group.addTask {
                     let difficulty = difficulties.randomElement() ?? .beginner
-                    return SudokuGenerator.generate(difficulty: difficulty, number: i)
+                    let sudoku = SudokuGenerator.generate(difficulty: difficulty, number: sudokuNumber)
+                    return (sudoku, sudokuNumber)
                 }
             }
             
-            var sudokus: [GeneratedSudoku] = []
-            for await sudoku in group {
-                sudokus.append(sudoku)
+            var sudokus: [(GeneratedSudoku, Int)] = []
+            for await result in group {
+                sudokus.append(result)
             }
             
             // Trier par numéro pour maintenir l'ordre
-            return sudokus.sorted { $0.number < $1.number }
+            return sudokus.sorted { $0.1 < $1.1 }.map { $0.0 }
         }
+        
+        // Mettre à jour le compteur global
+        globalCounter = startNumber + count - 1
         
         // Mise à jour sur MainActor (déjà garanti car la classe est @MainActor)
         generatedSudokus = newSudokus
@@ -56,17 +75,24 @@ class SudokuGeneratorViewModel: ObservableObject {
     func generateSudokusAlternative(count: Int, difficulties: [Difficulty]) async {
         isGenerating = true
         
+        // Récupérer le compteur actuel et l'incrémenter
+        let startNumber = globalCounter + 1
+        
         // Génération séquentielle mais dans un contexte async
         var sudokus: [GeneratedSudoku] = []
         
-        for i in 1...count {
+        for i in 0..<count {
             // Yield pour ne pas bloquer le main thread
             await Task.yield()
             
+            let sudokuNumber = startNumber + i
             let difficulty = difficulties.randomElement() ?? .beginner
-            let sudoku = SudokuGenerator.generate(difficulty: difficulty, number: i)
+            let sudoku = SudokuGenerator.generate(difficulty: difficulty, number: sudokuNumber)
             sudokus.append(sudoku)
         }
+        
+        // Mettre à jour le compteur global
+        globalCounter = startNumber + count - 1
         
         generatedSudokus = sudokus
         isGenerating = false

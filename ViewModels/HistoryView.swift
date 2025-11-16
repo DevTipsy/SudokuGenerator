@@ -131,14 +131,28 @@ struct HistoryRow: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(entry.description)
-                    .font(.body)
+            VStack(alignment: .leading, spacing: 6) {
+                    // Affichage du range de grilles
+                Text(entry.gridRange)
+                    .font(.subheadline)
                     .fontWeight(.medium)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 
-                Text(entry.formattedDate)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    // Affichage des niveaux avec leurs logos
+                HStack(spacing: 4) {
+                    Text("Niveaux :")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    ForEach(entry.uniqueDifficulties, id: \.id) { difficulty in
+                        HStack(spacing: 2) {
+                            Image(systemName: difficulty.icon)
+                                .font(.caption)
+                                .foregroundColor(difficulty.color)
+                        }
+                    }
+                }
             }
             
             Spacer()

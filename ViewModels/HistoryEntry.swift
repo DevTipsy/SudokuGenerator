@@ -25,6 +25,29 @@ struct HistoryEntry: Identifiable, Codable {
         return formatter.string(from: generationDate)
     }
     
+    var gridRange: String {
+        let count = sudokus.count
+        guard !sudokus.isEmpty else { return "Aucune grille" }
+        
+        let numbers = sudokus.map { $0.number }.sorted()
+        guard let first = numbers.first, let last = numbers.last else {
+            return "\(count) grille\(count > 1 ? "s" : "")"
+        }
+        
+        if first == last {
+            return "Grille \(first) (1 grille)"
+        } else {
+            return "Grilles \(first) à \(last) (\(count) grille\(count > 1 ? "s" : ""))"
+        }
+    }
+    
+    var uniqueDifficulties: [Difficulty] {
+        let difficulties = Set(sudokus.map { $0.difficulty })
+        return difficulties.sorted { d1, d2 in
+            Difficulty.allCases.firstIndex(of: d1) ?? 0 < Difficulty.allCases.firstIndex(of: d2) ?? 0
+        }
+    }
+    
     var description: String {
         let count = sudokus.count
         let difficulties = Set(sudokus.map { $0.difficulty })
